@@ -18,6 +18,7 @@ namespace CalculatorTest
             double result = DoOperation(calculator, number1, number2, operation);
             Print(result);         
         }
+
         static double AskNumbers()
         {
             double number;
@@ -34,11 +35,14 @@ namespace CalculatorTest
             bool validOperations = false;
             do
             {
-                Console.WriteLine("Possible operations -,+,*,/,");
+                Console.WriteLine("Possible operations -,+,*,/," +
+                    "\n p- raise a number to a power, " +
+                      "\n sqrt- square root  first number, " +
+                    "\n r- remainder of the division ");
                 Console.Write("Enter operation: ");
                 operation = Console.ReadLine();
 
-                string[] massOperations = { "+", "-", "*", "/" };
+                string[] massOperations = { "+", "-", "*", "/", "p", "r", "sqrt" };
                 for (int i = 0; i < massOperations.Length; i++)
                 {
                     if (massOperations[i] == operation)
@@ -77,9 +81,32 @@ namespace CalculatorTest
                     {
                         Console.WriteLine($"Exeption: {ex.Message}");
                         result = 0;
-                    }                    
+                    }
+                       
                     break;     
-               
+                case "p":
+                    result = Math.Pow(number1, number2);
+                    break;
+                case "r":
+                    result = number1 % number2;
+                    break;
+                case "sqrt":
+                    try
+                    {
+                        result = Math.Sqrt(number1);
+
+                        if (number1 < 0)
+                        {
+                            result = 0;
+                            throw new Exception("number < 0");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Exeption: {ex.Message}");
+                    }
+                    break;
+
                 default:
                     break;
             }
